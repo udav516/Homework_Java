@@ -10,6 +10,7 @@
 import java.util.Scanner;
 
 public class Task1 {
+
     public static void main(String[] args) {
         System.out.println(getTriangularNumber(10));
         System.out.println(getFactorial(5));
@@ -40,8 +41,9 @@ public class Task1 {
             if (i % 2 != 0 && i % 3 != 0 && i % 5 != 0
                     && i % 7 != 0 && i % 11 != 0 && i % 13 != 0
                     && i % 17 != 0 && i % 19 != 0 && i % 23 != 0
-                    && i % 29 != 0 && i % 31 != 0)
+                    && i % 29 != 0 && i % 31 != 0) {
                 System.out.print(i + " ");
+            }
         }
         System.out.println();
 
