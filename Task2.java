@@ -1,15 +1,18 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-// Задание 1 - Дана строка sql-запроса "select * from students where ". Сформируйте часть WHERE этого запроса, используя StringBuilder. Данные для фильтрации приведены ниже в виде json строки.
+// Задание 1 - Дана строка sql-запроса "select * from students where ".
+// Сформируйте часть WHERE этого запроса, используя StringBuilder.
+// Данные для фильтрации приведены ниже в виде json строки.
 // Если значение null, то параметр не должен попадать в запрос.
 // Параметры для фильтрации: {"name":"Ivanov", "country":"Russia", "city":"Moscow", "age":"null"}
-// [{"фамилия":"Иванов","оценка":"5","предмет":"Математика"},
-// {"фамилия":"Петрова","оценка":"4","предмет":"Информатика"},
-// {"фамилия":"Краснов","оценка":"5","предмет":"Физика"}]
+
+// [{"фамилия":"Иванов","оценка":"5","предмет":"Математика"},{"фамилия":"Петрова","оценка":"4","предмет":"Информатика"}, {"фамилия":"Краснов","оценка":"5","предмет":"Физика"}]
 // Написать метод(ы), который распарсит json и, используя StringBuilder, создаст строки вида: Студент [фамилия] получил [оценка] по предмету [предмет].
 // (Не sql запрос, я оговорился на вебинаре!)
 // Пример вывода:
@@ -28,12 +31,41 @@ import java.util.logging.Logger;
 // Задание 4 - К калькулятору из предыдущего дз добавить логирование.
 
 public class Task2 {
+
     public static void main(String[] args) throws IOException {
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("name", "Ivanov");
+        map.put("country", "Russia");
+        map.put("city", "Moscow");
+        map.put("age", null);
+        System.out.println(getQuery(map));
+
         int[] sortArr = { 11, 5, 3, 1, 15, 10, 17 };
         bubbleSort(sortArr);
         File extension = new File("C:/Users/Eldar/Desktop/Homework___Java");
         getExtension(extension);
         calculator();
+    }
+
+    public static String getQuery(Map<String, String> parameters) {
+        StringBuilder result = new StringBuilder();
+        if (parameters == null || parameters.isEmpty()) {
+            return result.toString();
+        }
+
+        for (Map.Entry<String, String> pair : parameters.entrySet()) {
+            if (pair.getKey() == null || pair.getValue() == null) {
+                continue;
+            }
+
+            result.append(pair.getKey()).append(":'").append(pair.getValue()).append("', ");
+        }
+
+        if (result.length() > 5) {
+            result.delete(result.length() - 2, result.length());
+        }
+
+        return result.toString();
     }
 
     public static void bubbleSort(int[] sortArr) throws IOException {
@@ -46,21 +78,22 @@ public class Task2 {
                 }
             }
         }
-        String sort = new String();
-        for (int i = 0; i < sortArr.length; i++) {
-            sort = sort + " " + sortArr[i];
+        StringBuilder sort = new StringBuilder();
+        for (int j : sortArr) {
+            sort.append(" ").append(j);
         }
-        try (FileWriter writer = new FileWriter("logFile.txt", false)) {
-            writer.write(sort);
+        try (FileWriter writer = new FileWriter("log.txt", false)) {
+            writer.write(sort.toString());
             writer.flush();
         }
     }
 
     public static void getExtension(File extension) {
         String[] array = extension.list();
-        String arrayString = new String();
-        for (int i = 0; i < array.length; i++) {
-            arrayString = array[i].substring(array[i].lastIndexOf('.'));
+        String arrayString;
+        assert array != null;
+        for (String s : array) {
+            arrayString = s.substring(s.lastIndexOf('.'));
             System.out.println(" Расширение файла: " + String.join(" ", arrayString));
         }
     }
@@ -90,7 +123,7 @@ public class Task2 {
             // System.out.println("Результат = " + result);
             String log = Integer.toString(result);
             Logger logger = Logger.getAnonymousLogger();
-            logger.info(log);
+            logger.info("Результат = " + log);
         }
     }
 }
