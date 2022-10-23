@@ -87,12 +87,12 @@ public class Task3 {
         double minimum = arrayList.get(0);
         double maximum = arrayList.get(0);
         double sum = 0;
-        for (Double i: arrayList) {
+        for (Double i : arrayList) {
             sum += i;
-            if(i < minimum)
-            minimum = i;
-            if(i > maximum)
-            maximum = i;
+            if (i < minimum)
+                minimum = i;
+            if (i > maximum)
+                maximum = i;
         }
         arrayList.clear();
         arrayList.add(minimum);
@@ -100,6 +100,6 @@ public class Task3 {
         double average = sum / arrayList.size();
         arrayList.add(average);
         return arrayList;
-              
+
     }
 }
