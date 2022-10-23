@@ -20,16 +20,24 @@ public class Task3 {
         // System.out.println(Arrays.toString(result));
         Logger logger = Logger.getAnonymousLogger();
         logger.info(Arrays.toString(result));
-        List<Integer> numbers = new ArrayList<Integer>();
-        numbers.add(11);
-        numbers.add(42);
-        numbers.add(17);
-        numbers.add(32);
-        numbers.add(55);
-        deleteEvenElement(numbers);
-        String listString = numbers.toString();
-        // System.out.println(listString);
-        logger.info(listString);
+        List<Integer> listNumbers = new ArrayList<Integer>();
+        listNumbers.add(11);
+        listNumbers.add(42);
+        listNumbers.add(17);
+        listNumbers.add(32);
+        listNumbers.add(55);
+        deleteEvenElement(listNumbers);
+        // System.out.println(listNumbers.toString());
+        logger.info(listNumbers.toString());
+        ArrayList<Double> arrayListNumbers = new ArrayList<Double>();
+        arrayListNumbers.add((double) 13);
+        arrayListNumbers.add((double) 21);
+        arrayListNumbers.add((double) 32);
+        arrayListNumbers.add((double) 47);
+        arrayListNumbers.add((double) 56);
+        getMinMaxAverage(arrayListNumbers);
+        // System.out.println(Arrays.toString(arrayListNumbers.toArray()));
+        logger.info(Arrays.toString(arrayListNumbers.toArray()));
     }
 
     public static int[] mergeSort(int[] sortArr) {
@@ -64,17 +72,34 @@ public class Task3 {
         }
         return result;
     }
- 
+
     public static List<Integer> deleteEvenElement(List<Integer> sortArr) {
         for (Iterator<Integer> iterator = sortArr.iterator(); iterator.hasNext();) {
             Integer number = iterator.next();
             if (number % 2 == 0) {
                 iterator.remove();
             }
-        
         }
-        
-        // System.out.println("Sorted List: " + sortArr);
         return sortArr;
+    }
+
+    public static ArrayList<Double> getMinMaxAverage(ArrayList<Double> arrayList) {
+        double minimum = arrayList.get(0);
+        double maximum = arrayList.get(0);
+        double sum = 0;
+        for (Double i: arrayList) {
+            sum += i;
+            if(i < minimum)
+            minimum = i;
+            if(i > maximum)
+            maximum = i;
+        }
+        arrayList.clear();
+        arrayList.add(minimum);
+        arrayList.add(maximum);
+        double average = sum / arrayList.size();
+        arrayList.add(average);
+        return arrayList;
+              
     }
 }
